@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="PawsOff is a Chrome extension that blocks distracting sites with an adorable puppy takeover. The cutest forced break." />
+  <meta property="og:title" content="PawsOff — The cutest forced break" />
+  <meta property="og:description"
+    content="A Chrome extension where a real puppy takes over distracting sites when your timer runs out." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/icon128.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>PawsOff — The cutest forced break</title>
+  <link rel="icon" href="assets/icon128.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Matrix rain canvas -->
+  <canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+  <!-- CRT scanline overlay -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="PawsOff home">
+      <img src="assets/icon128.png" alt="" />
+      <span>PawsOff</span>
+    </a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#install">Install</a>
+      <a href="#how-it-works">How</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#support">Support</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ===== HERO ===== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-terminal" aria-hidden="true">
+        <div class="terminal-bar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="terminal-title">pawsoff@mainframe:~</span>
+        </div>
+        <div class="terminal-body">
+          <pre class="ascii-puppy">
+    / \__
+   (    @\___
+   /         O
+  /   (_____/
+ /_____/   U
+          </pre>
+          <p class="terminal-line"><span class="prompt">$</span> <span class="cmd-text" id="typed-command"></span><span class="cursor-blink">█</span></p>
+          <p class="terminal-output">> PawsOff v1.0.0 loaded. Puppy protection: <span class="status-on">ACTIVE</span></p>
+          <p class="terminal-output">> Monitoring 8 sites. Break timer: 5 min.</p>
+          <p class="terminal-output">> Next puppy deployment in: <span class="countdown-demo">29:41</span></p>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <p class="eyebrow">// Chrome extension • v1.0.0</p>
+        <h1 id="hero-title">
+          <span>The puppy</span>
+          <span>that blocks</span>
+          <span>your scroll<span class="cursor-blink">_</span></span>
+        </h1>
+        <p class="hero-line">
+          Pick distracting websites. Set a timer. When time is up, a real puppy slides in and takes over the entire page until your break ends.
+        </p>
+        <div class="hero-actions" id="install">
+          <a class="button primary" href="#">
+            <span class="btn-icon">⬇</span> Install for Chrome
+          </a>
+          <a class="button dark" href="https://github.com/kapilraghuwanshi/pawsoff">
+            <span class="btn-icon">&lt;/&gt;</span> View Source
+          </a>
+          <a class="button ghost" href="#support">
+            <span class="btn-icon">♥</span> Support Us
+          </a>
+        </div>
+        <p class="launch-note">// launching Chrome-first. Electron desktop app: later.</p>
+      </div>
+
+      <div class="hero-puppy-wrap" aria-hidden="true">
+        <img class="hero-puppy" src="assets/puppy.png" alt="" />
+      </div>
+    </section>
+
+    <!-- ===== MISSION ===== -->
+    <section class="mission" aria-labelledby="mission-title">
+      <div>
+        <p class="eyebrow">// why_it_exists</p>
+        <h2 id="mission-title">Website blockers feel like homework. This one feels like being interrupted by a tiny supervisor.</h2>
+      </div>
+      <div class="mission-detail">
+        <p>PawsOff is intentionally playful: no guilt dashboard, no productivity sermon, no account. Just local settings, target sites, a countdown, and the cutest interruption when scrolling wins.</p>
+        <div class="stat-row">
+          <div class="stat"><span class="stat-num">0</span><span class="stat-label">data collected</span></div>
+          <div class="stat"><span class="stat-num">0</span><span class="stat-label">ads shown</span></div>
+          <div class="stat"><span class="stat-num">∞</span><span class="stat-label">cuteness</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="setup" id="how-it-works" aria-labelledby="setup-title">
+      <div class="section-heading">
+        <p class="eyebrow">// how_it_works</p>
+        <h2 id="setup-title">Three commands. Zero config files.</h2>
+      </div>
+      <div class="setup-grid">
+        <article class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-code">
+            <code>$ pawsoff add youtube.com</code>
+          </div>
+          <h3>Add target sites</h3>
+          <p>Guard X, YouTube, Reddit, Facebook, Instagram, or any custom website you keep doom-scrolling.</p>
+        </article>
+        <article class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-code">
+            <code>$ pawsoff --limit 30 --break 5</code>
+          </div>
+          <h3>Set your timer</h3>
+          <p>Choose how many minutes before the puppy appears, then pick the break duration. That's it.</p>
+        </article>
+        <article class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-code">
+            <code>$ pawsoff deploy --puppy 🐶</code>
+          </div>
+          <h3>Respect the takeover</h3>
+          <p>The puppy slides in from the side, blocks the entire page, and keeps watch until your break countdown ends.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== DEMO ===== -->
+    <section class="console" aria-labelledby="console-title">
+      <div class="console-copy">
+        <p class="eyebrow">// live_preview</p>
+        <h2 id="console-title">What happens when the timer hits zero.</h2>
+        <p>The puppy walks in from either side — left or right, randomly — bounces into the center, and sits on top of everything. The countdown runs. You take a break. The puppy approves.</p>
+      </div>
+      <div class="browser-demo" aria-label="PawsOff demo mockup">
+        <div class="browser-demo-bar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="browser-url">youtube.com</span>
+        </div>
+        <div class="browser-demo-screen">
+          <div class="blocked-copy">
+            <span class="blocked-badge">🐶 PawsOff is on duty</span>
+            <strong class="blocked-timer">04:59</strong>
+            <p>Stretch. Blink. Water. Then return.</p>
+          </div>
+          <img src="assets/puppy.png" alt="Puppy blocking the screen" class="demo-puppy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="features" id="features" aria-labelledby="features-title">
+      <div class="section-heading">
+        <p class="eyebrow">// sys_specs</p>
+        <h2 id="features-title">Built lean. Ships clean.</h2>
+      </div>
+      <div class="features-grid">
+        <article>
+          <div class="feat-icon">🎯</div>
+          <h3>Custom target sites</h3>
+          <p>Add any URL. Default guards: X, YouTube, Reddit, Facebook, Instagram, TikTok, LinkedIn.</p>
+        </article>
+        <article>
+          <div class="feat-icon">⏱</div>
+          <h3>Adjustable timers</h3>
+          <p>Usage limit: 1–60 min. Break duration: 1–10 min. Fine-tune from the popup or options page.</p>
+        </article>
+        <article>
+          <div class="feat-icon">👁</div>
+          <h3>Smart tracking</h3>
+          <p>Timer only counts when a guarded tab is visible and focused. Switch tabs = timer pauses.</p>
+        </article>
+        <article>
+          <div class="feat-icon">🔒</div>
+          <h3>100% local</h3>
+          <p>All settings stored in Chrome local storage. Zero data leaves your machine. No accounts.</p>
+        </article>
+        <article>
+          <div class="feat-icon">🐕</div>
+          <h3>Real puppy overlay</h3>
+          <p>A photorealistic puppy slides in, sits on the page, and supervises your break with a countdown.</p>
+        </article>
+        <article>
+          <div class="feat-icon">🚫</div>
+          <h3>No ads. Free forever.</h3>
+          <p>No premium tier, no tracking pixels, no analytics. Open source on GitHub.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== REVIEWS ===== -->
+    <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+      <div class="section-heading">
+        <p class="eyebrow">// user_feedback.log</p>
+        <h2 id="reviews-title">Transmission received.</h2>
+      </div>
+      <div class="review-grid">
+        <figure class="review-card">
+          <blockquote>"I opened YouTube for one video and got judged by a puppy. Honestly, fair."</blockquote>
+          <figcaption>
+            <strong>@scrolladdict</strong>
+            <span>Chrome user</span>
+          </figcaption>
+        </figure>
+        <figure class="review-card">
+          <blockquote>"It feels less like punishment and more like a tiny intervention. 10/10 would get blocked again."</blockquote>
+          <figcaption>
+            <strong>@devwhodooms</strong>
+            <span>Beta tester</span>
+          </figcaption>
+        </figure>
+        <figure class="review-card">
+          <blockquote>"I laughed, then actually took the break. That's more than any focus app has ever achieved."</blockquote>
+          <figcaption>
+            <strong>@focusfanatic</strong>
+            <span>Productivity nerd</span>
+          </figcaption>
+        </figure>
+        <figure class="review-card">
+          <blockquote>"My team installed this ironically. Now everyone actually takes breaks. The puppy is too powerful."</blockquote>
+          <figcaption>
+            <strong>@teamlead_anon</strong>
+            <span>Startup founder</span>
+          </figcaption>
+        </figure>
+        <figure class="review-card">
+          <blockquote>"Set it to 1 minute as a joke. Got puppy'd immediately. No regrets."</blockquote>
+          <figcaption>
+            <strong>@chaosdev</strong>
+            <span>Early adopter</span>
+          </figcaption>
+        </figure>
+        <figure class="review-card">
+          <blockquote>"Finally a Chrome extension that understands I don't need a dashboard — I need a puppy."</blockquote>
+          <figcaption>
+            <strong>@minimalista</strong>
+            <span>Designer</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== SHARE KIT ===== -->
+    <section class="share-kit" aria-labelledby="share-title">
+      <div class="section-heading">
+        <p class="eyebrow">// broadcast.sh</p>
+        <h2 id="share-title">Copy. Paste. Launch.</h2>
+      </div>
+      <div class="share-grid">
+        <article class="share-card">
+          <h3>𝕏 Post</h3>
+          <div class="share-preview">
+            <p>Just installed PawsOff — a Chrome extension where a real puppy blocks distracting sites when your timer runs out. Cute, silly, and weirdly effective. 🐶</p>
+          </div>
+          <button class="copy-button"
+            data-copy="Just installed PawsOff — a Chrome extension where a real puppy blocks distracting sites when your timer runs out. Cute, silly, and weirdly effective. 🐶 Try it: https://github.com/kapilraghuwanshi/pawsoff">$ copy --post</button>
+        </article>
+        <article class="share-card">
+          <h3>LinkedIn</h3>
+          <div class="share-preview">
+            <p>Built PawsOff — a playful Chrome extension that turns forced breaks into a puppy takeover instead of another guilt dashboard. No ads, no accounts, open source.</p>
+          </div>
+          <button class="copy-button"
+            data-copy="Built PawsOff — a playful Chrome extension that turns forced breaks into a puppy takeover instead of another guilt dashboard. No ads, no accounts, fully local storage, open source. Try it: https://github.com/kapilraghuwanshi/pawsoff">$ copy --post</button>
+        </article>
+        <article class="share-card">
+          <h3>Product Hunt</h3>
+          <div class="share-preview">
+            <p>A Chrome extension where a puppy takes over distracting websites when your focus timer runs out. The cutest forced break.</p>
+          </div>
+          <button class="copy-button"
+            data-copy="A Chrome extension where a puppy takes over distracting websites when your focus timer runs out. The cutest forced break.">$ copy --tagline</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== ROADMAP ===== -->
+    <section class="roadmap" id="roadmap" aria-labelledby="roadmap-title">
+      <div>
+        <p class="eyebrow">// roadmap.yml</p>
+        <h2 id="roadmap-title">Small launch. Bigger puppy later.</h2>
+      </div>
+      <div class="roadmap-list">
+        <div class="roadmap-item">
+          <div class="roadmap-status active">SHIPPED</div>
+          <div>
+            <strong>v1.0 — Chrome Extension</strong>
+            <p>Target sites, usage timer, break timer, real puppy overlay, local-only storage.</p>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status next">NEXT</div>
+          <div>
+            <strong>v1.1 — More puppies & polish</strong>
+            <p>Multiple puppy breeds, store screenshots, real user reviews, supporter credits.</p>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status later">LATER</div>
+          <div>
+            <strong>v2.0 — Electron Desktop App</strong>
+            <p>Machine-wide breaks, app rules, scheduled downtime, and cross-platform puppy domination.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SUPPORT ===== -->
+    <section class="support" id="support" aria-labelledby="support-title">
+      <div class="section-heading">
+        <p class="eyebrow">// fund_the_puppy</p>
+        <h2 id="support-title">Help fund puppy packs and the desktop experiment.</h2>
+      </div>
+      <div class="support-grid">
+        <a class="support-card" href="https://www.buymeacoffee.com/kapilraghuwanshi">
+          <span class="support-emoji">☕</span>
+          <span class="support-label">Buy Me a Coffee</span>
+          <strong>One-time thanks</strong>
+        </a>
+        <a class="support-card" href="https://ko-fi.com/kapilraghuwanshi">
+          <span class="support-emoji">🎨</span>
+          <span class="support-label">Ko-fi</span>
+          <strong>Small tips</strong>
+        </a>
+        <a class="support-card" href="https://github.com/sponsors/kapilraghuwanshi">
+          <span class="support-emoji">💜</span>
+          <span class="support-label">GitHub Sponsors</span>
+          <strong>Monthly support</strong>
+        </a>
+        <a class="support-card" href="https://gumroad.com/kapilraghuwanshi">
+          <span class="support-emoji">🎁</span>
+          <span class="support-label">Gumroad</span>
+          <strong>Future extras</strong>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== PRIVACY ===== -->
+    <section class="privacy" id="privacy" aria-labelledby="privacy-title">
+      <div>
+        <p class="eyebrow">// security_audit.log</p>
+        <h2 id="privacy-title">Local storage only. No external calls. Zero tracking.</h2>
+      </div>
+      <div class="privacy-detail">
+        <p>PawsOff stores target sites, timer settings, and timer progress locally in Chrome. It checks page hostnames only to decide whether the puppy overlay should appear. No analytics, no ads, no accounts, no external servers.</p>
+        <div class="privacy-badges">
+          <span class="badge">🔒 Local-only</span>
+          <span class="badge">🚫 No analytics</span>
+          <span class="badge">📵 No external calls</span>
+          <span class="badge">🆓 Free forever</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <img src="assets/icon128.png" alt="" />
+      <span>PawsOff</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://x.com/kapaborshi">𝕏</a>
+      <a href="https://www.linkedin.com/in/kapilraghuwanshi/">LinkedIn</a>
+      <a href="https://github.com/kapilraghuwanshi/pawsoff">GitHub</a>
+      <a href="mailto:kapilraghuwanshi@gmail.com">Contact</a>
+    </div>
+    <p class="footer-copy">Built with 🐶 by a human who kept doom-scrolling.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+
+</html>

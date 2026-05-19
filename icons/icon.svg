@@ -1,0 +1,11 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" rx="28" fill="#1B1612"/>
+  <g transform="translate(64, 62)">
+    <!-- Main pad -->
+    <ellipse cx="0" cy="12" rx="24" ry="20" fill="#FF6537"/>
+    <!-- Toe beans -->
+    <ellipse cx="-16" cy="-8" rx="9" ry="10" fill="#FF6537"/>
+    <ellipse cx="0" cy="-16" rx="9" ry="10" fill="#FF6537"/>
+    <ellipse cx="16" cy="-8" rx="9" ry="10" fill="#FF6537"/>
+  </g>
+</svg>

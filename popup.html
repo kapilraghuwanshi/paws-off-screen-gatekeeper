@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PawsOff</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <header class="header">
+        <img src="icons/icon128.png" alt="" class="logo" />
+        <h1>PawsOff</h1>
+        <p class="tagline">The cutest forced break</p>
+      </header>
+
+      <label class="check">
+        <input id="enabled" type="checkbox" />
+        <span>Puppy protection active</span>
+      </label>
+
+      <label class="field">
+        Minutes before the puppy appears
+        <input id="usage-limit" type="number" min="1" max="240" step="1" />
+      </label>
+
+      <label class="field">
+        Break time (minutes)
+        <input id="break-time" type="number" min="1" max="60" step="1" />
+      </label>
+
+      <label class="field">
+        Target sites
+        <textarea id="sites" spellcheck="false"></textarea>
+      </label>
+      <p class="help">One per line, or separated by commas. URLs are OK.</p>
+
+      <div class="quick-actions">
+        <button id="add-site" type="button" class="ghost">Add this site</button>
+        <button id="reset-site" type="button" class="ghost">Reset timer</button>
+      </div>
+
+      <button id="save" type="button" class="save">Save 🐾</button>
+      <p id="site-status" class="status" aria-live="polite">Checking this tab...</p>
+
+      <a class="official" href="options.html" target="_blank">⚙ Advanced settings</a>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

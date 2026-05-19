@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PawsOff — Overlay Test</title>
+  <style>
+    /* Fake YouTube background */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+    }
+    .fake-yt {
+      padding: 60px 40px;
+    }
+    .fake-yt-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 24px;
+      background: #212121;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .fake-yt-header span { color: #ff0000; font-size: 28px; }
+    .fake-yt h2 { color: #aaa; margin-top: 40px; }
+    .fake-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .fake-thumb {
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #333, #222);
+    }
+    .fake-title {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
+  <!-- Load the actual extension overlay CSS -->
+  <link rel="stylesheet" href="content.css" />
+</head>
+<body>
+  <!-- Fake YouTube page behind the overlay -->
+  <div class="fake-yt-header">
+    <span>▶</span> YouTube
+  </div>
+  <div class="fake-yt">
+    <h2>Recommended</h2>
+    <div class="fake-grid">
+      <div><div class="fake-thumb"></div><div class="fake-title">How I Built a Chrome Extension in 24 Hours</div></div>
+      <div><div class="fake-thumb"></div><div class="fake-title">10 Hour Lo-Fi Hip Hop Mix</div></div>
+      <div><div class="fake-thumb"></div><div class="fake-title">Why You Keep Doom-Scrolling</div></div>
+      <div><div class="fake-thumb"></div><div class="fake-title">Cute Puppies Compilation 2026</div></div>
+      <div><div class="fake-thumb"></div><div class="fake-title">Building With AI - Full Tutorial</div></div>
+      <div><div class="fake-thumb"></div><div class="fake-title">The Science of Procrastination</div></div>
+      <div><div class="fake-thumb"></div><div class="fake-title">Best Productivity Chrome Extensions</div></div>
+      <div><div class="fake-thumb"></div><div class="fake-title">Dog Training for Beginners</div></div>
+    </div>
+  </div>
+
+  <!-- Inject the actual overlay (simulating what content.js creates) -->
+  <section id="pawsoff-overlay" role="dialog" aria-modal="true">
+    <div class="pawsoff-stage">
+      <div class="pawsoff-copy">
+        <div class="pawsoff-kicker">🐶 PawsOff is on duty</div>
+        <h1 class="pawsoff-title">Paws off.</h1>
+        <p class="pawsoff-subtitle">This site has had enough of you for now.<br>Stretch, blink, sip water — and let the puppy supervise.</p>
+        <div class="pawsoff-countdown" aria-live="polite">04:59</div>
+        <div class="pawsoff-hint">The page unlocks automatically when the countdown ends.</div>
+      </div>
+      <div class="pawsoff-dog-wrap pawsoff-enter-left">
+        <img class="pawsoff-dog" src="assets/puppy.png" alt="Cute puppy blocking the page" />
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Live countdown simulation
+    let seconds = 4 * 60 + 59;
+    const cd = document.querySelector('.pawsoff-countdown');
+    setInterval(() => {
+      seconds = Math.max(0, seconds - 1);
+      const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      cd.textContent = m + ':' + s;
+    }, 1000);
+  </script>
+</body>
+</html>
