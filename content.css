@@ -116,39 +116,56 @@
   letter-spacing: 0.02em;
 }
 
-/* ===== Giant Puppy ===== */
+/* ===== Giant Puppy Overlay ===== */
 .pawsoff-dog-wrap {
   position: absolute;
-  right: -2vw;
-  left: auto;
   bottom: -2vh;
   z-index: 90;
-  width: min(65vw, 900px);
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
   filter: drop-shadow(0 60px 80px rgba(80, 45, 20, 0.45));
-  transform: translateX(0);
-  will-change: transform;
 }
 
-.pawsoff-enter-left {
-  animation:
-    pawsoffEnterLeft 3s cubic-bezier(0.2, 0.8, 0.2, 1) both,
-    pawsoffSit 4s ease-in-out 3s infinite;
+/* Husky: Left side of the screen */
+.pawsoff-dog-wrap.pawsoff-husky {
+  left: -2vw;
+  right: auto;
+  width: auto;
+  justify-content: flex-start;
 }
 
-.pawsoff-enter-right {
-  animation:
-    pawsoffEnterRight 3s cubic-bezier(0.2, 0.8, 0.2, 1) both,
-    pawsoffSit 4s ease-in-out 3s infinite;
+.pawsoff-husky .pawsoff-slide-in {
+  animation: pawsoffHuskySlideIn 3.5s cubic-bezier(0.15, 0.85, 0.2, 1) forwards;
 }
 
-.pawsoff-dog {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  animation: pawsoffBoop 2.8s ease-in-out 1.5s infinite;
-  transform-origin: 50% 75%;
+/* Labrador: Bottom-center of the screen */
+.pawsoff-dog-wrap.pawsoff-labrador {
+  left: 58%;
+  right: auto;
+  transform: translateX(-50%);
+  width: auto;
+  justify-content: center;
+}
+
+.pawsoff-labrador .pawsoff-slide-in {
+  animation: pawsoffLabradorZoomIn 4s cubic-bezier(0.15, 0.85, 0.2, 1) forwards;
+}
+
+.pawsoff-dog-wrap video {
+  height: 140vh; /* 2x massive size */
+  width: auto;
+  object-fit: contain;
+  transform-origin: bottom center;
+}
+
+.pawsoff-idle-visible {
+  display: block !important;
+  animation: pawsoffSit 4s ease-in-out infinite;
+}
+
+.pawsoff-dog-hidden {
+  display: none !important;
 }
 
 /* ===== Paw prints scattered ===== */
@@ -244,24 +261,24 @@
   }
 }
 
-@keyframes pawsoffEnterLeft {
-  0% {
-    transform: translateX(100vw) translateY(10vh) scale(1.2) rotate(10deg);
-    opacity: 0;
+@keyframes pawsoffHuskySlideIn {
+  from {
+    transform: translateX(-100vw);
+    opacity: 0.9;
   }
-  100% {
-    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+  to {
+    transform: translateX(0);
     opacity: 1;
   }
 }
 
-@keyframes pawsoffEnterRight {
-  0% {
-    transform: translateX(100vw) translateY(10vh) scale(1.2) rotate(10deg);
+@keyframes pawsoffLabradorZoomIn {
+  from {
+    transform: scale(0.4);
     opacity: 0;
   }
-  100% {
-    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+  to {
+    transform: scale(1);
     opacity: 1;
   }
 }

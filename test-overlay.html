@@ -65,7 +65,7 @@
   </div>
 
   <!-- Inject the actual overlay (simulating what content.js creates) -->
-  <section id="pawsoff-overlay" role="dialog" aria-modal="true">
+  <section id="pawsoff-overlay" role="dialog" aria-modal="true" style="display: none;">
     <div class="pawsoff-stage">
       <div class="pawsoff-copy">
         <div class="pawsoff-kicker">🐶 PawsOff is on duty</div>
@@ -74,11 +74,69 @@
         <div class="pawsoff-countdown" aria-live="polite">04:59</div>
         <div class="pawsoff-hint">The page unlocks automatically when the countdown ends.</div>
       </div>
-      <div class="pawsoff-dog-wrap pawsoff-enter-left">
-        <img class="pawsoff-dog" src="assets/puppy.png" alt="Cute puppy blocking the page" />
+      <div class="pawsoff-dog-wrap">
+        <!-- Videos will be injected here via JS to simulate content.js -->
       </div>
     </div>
   </section>
+
+  <!-- Interaction Trigger Button to satisfy Chrome Autoplay policies -->
+  <div style="position: fixed; top: 20px; right: 20px; z-index: 2147483647;">
+    <button id="trigger-btn" style="padding: 12px 24px; font-size: 16px; font-weight: bold; background: #ff0000; color: white; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">Trigger PawsOff Break</button>
+  </div>
+
+  <div id="error-log" style="position: fixed; bottom: 20px; left: 20px; z-index: 2147483647; color: red; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px; font-family: monospace; display: none;"></div>
+
+  <script>
+    const triggerBtn = document.getElementById("trigger-btn");
+    const overlay = document.getElementById("pawsoff-overlay");
+    const errorLog = document.getElementById("error-log");
+
+    triggerBtn.addEventListener("click", () => {
+      triggerBtn.style.display = "none";
+      overlay.style.display = "block";
+      
+      const breeds = ["husky", "labrador"];
+      const breed = breeds[Math.floor(Math.random() * breeds.length)];
+      console.log("Selected breed for test:", breed);
+      
+      const wrap = document.querySelector(".pawsoff-dog-wrap");
+      wrap.className = `pawsoff-dog-wrap pawsoff-${breed}`;
+      wrap.innerHTML = `
+        <video class="pawsoff-dog-walk pawsoff-slide-in" src="assets/${breed}_walk.webm" autoplay muted playsinline></video>
+        <video class="pawsoff-dog-idle pawsoff-dog-hidden" src="assets/${breed}_idle.webm" muted loop playsinline></video>
+      `;
+
+      const walkVideo = wrap.querySelector(".pawsoff-dog-walk");
+      const idleVideo = wrap.querySelector(".pawsoff-dog-idle");
+
+      // Handle play errors
+      const handlePlayError = (videoNode, name) => {
+        videoNode.addEventListener("error", (e) => {
+          errorLog.style.display = "block";
+          errorLog.textContent = `Error loading ${name} (${breed}): ${videoNode.error.message} (Code: ${videoNode.error.code}). Check if assets/${breed}_walk.webm exists in the folder.`;
+        });
+      };
+
+      handlePlayError(walkVideo, "Walk Video");
+      handlePlayError(idleVideo, "Idle Video");
+
+      walkVideo.play().catch(err => {
+        errorLog.style.display = "block";
+        errorLog.textContent = `Play block error: ${err.message}`;
+      });
+
+      walkVideo.addEventListener("ended", () => {
+        walkVideo.classList.add("pawsoff-dog-hidden");
+        idleVideo.classList.remove("pawsoff-dog-hidden");
+        idleVideo.classList.add("pawsoff-idle-visible");
+        idleVideo.play().catch(err => {
+          errorLog.style.display = "block";
+          errorLog.textContent = `Play block error (idle): ${err.message}`;
+        });
+      });
+    });
+  </script>
 
   <script>
     // Live countdown simulation

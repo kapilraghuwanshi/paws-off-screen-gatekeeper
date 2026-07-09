@@ -18,7 +18,7 @@
   };
 
   const chromeApi = globalThis.chrome;
-  const assetUrl = chromeApi.runtime.getURL("assets/puppy.png");
+  const breeds = ["husky", "labrador"];
   const host = normalizeHost(location.hostname);
   let settings = DEFAULT_SETTINGS;
   let usage = {};
@@ -101,9 +101,10 @@
 
   function showOverlay(remainingMs) {
     if (!overlay) {
-      const entryClass = Math.random() > 0.5
-        ? "pawsoff-enter-right"
-        : "pawsoff-enter-left";
+      const breed = breeds[Math.floor(Math.random() * breeds.length)];
+      const walkVideoUrl = chromeApi.runtime.getURL(`assets/${breed}_walk.webm`);
+      const idleVideoUrl = chromeApi.runtime.getURL(`assets/${breed}_idle.webm`);
+
       overlay = document.createElement("section");
       overlay.id = "pawsoff-overlay";
       overlay.setAttribute("role", "dialog");
@@ -117,14 +118,25 @@
             <div class="pawsoff-countdown" aria-live="polite">00:00</div>
             <div class="pawsoff-hint">The page unlocks automatically when the countdown ends.</div>
           </div>
-          <div class="pawsoff-dog-wrap ${entryClass}">
-            <img class="pawsoff-dog" src="${assetUrl}" alt="Cute puppy blocking the page" />
+          <div class="pawsoff-dog-wrap pawsoff-${breed}">
+            <video class="pawsoff-dog-walk pawsoff-slide-in" src="${walkVideoUrl}" autoplay muted playsinline></video>
+            <video class="pawsoff-dog-idle pawsoff-dog-hidden" src="${idleVideoUrl}" muted loop playsinline></video>
           </div>
         </div>
       `;
       countdownNode = overlay.querySelector(".pawsoff-countdown");
       document.documentElement.append(overlay);
       document.documentElement.style.overflow = "hidden";
+
+      const walkVideo = overlay.querySelector(".pawsoff-dog-walk");
+      const idleVideo = overlay.querySelector(".pawsoff-dog-idle");
+
+      walkVideo.addEventListener("ended", () => {
+        walkVideo.classList.add("pawsoff-dog-hidden");
+        idleVideo.classList.remove("pawsoff-dog-hidden");
+        idleVideo.classList.add("pawsoff-idle-visible");
+        idleVideo.play();
+      });
     }
     countdownNode.textContent = formatDuration(remainingMs);
   }
