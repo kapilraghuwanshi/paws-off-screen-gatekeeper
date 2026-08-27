@@ -262,3 +262,31 @@ select option {
 }
 
 /* Desktop-only — Chrome extension, no mobile needed */
+
+/* ===== Footer ===== */
+.options-footer {
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.options-footer-link {
+  color: #ff8c55;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.options-footer-link:hover {
+  color: #ffab7a;
+}
+
+.options-author {
+  margin: 10px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.02em;
+}

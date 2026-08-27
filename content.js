@@ -37,6 +37,15 @@
     matchedSite = getMatchedSite(host, settings.sites);
     ensureSiteState();
     chromeApi.storage.onChanged.addListener(handleStorageChange);
+    chromeApi.runtime.onMessage.addListener((message) => {
+      if (message?.type === "PAWSOFF_DISMISS") {
+        removeOverlay();
+        if (matchedSite && usage[matchedSite]) {
+          usage[matchedSite].usedMs = 0;
+          usage[matchedSite].breakUntil = 0;
+        }
+      }
+    });
     window.addEventListener("pagehide", flushUsage);
     document.addEventListener("visibilitychange", () => {
       lastTick = Date.now();
@@ -117,6 +126,7 @@
             <p class="pawsoff-subtitle">This site has had enough of you for now.<br>Stretch, blink, sip water — and let the puppy supervise.</p>
             <div class="pawsoff-countdown" aria-live="polite">00:00</div>
             <div class="pawsoff-hint">The page unlocks automatically when the countdown ends.</div>
+            <button class="pawsoff-dismiss" type="button">Shhhhh Puppy 🐾</button>
           </div>
           <div class="pawsoff-dog-wrap pawsoff-${breed}">
             <video class="pawsoff-dog-walk pawsoff-slide-in" src="${walkVideoUrl}" autoplay muted playsinline></video>
@@ -127,6 +137,17 @@
       countdownNode = overlay.querySelector(".pawsoff-countdown");
       document.documentElement.append(overlay);
       document.documentElement.style.overflow = "hidden";
+
+      // Dismiss button
+      overlay.querySelector(".pawsoff-dismiss").addEventListener("click", () => {
+        if (matchedSite && usage[matchedSite]) {
+          usage[matchedSite].usedMs = 0;
+          usage[matchedSite].breakUntil = 0;
+          usage[matchedSite].updatedAt = Date.now();
+          flushUsage();
+        }
+        removeOverlay();
+      });
 
       const walkVideo = overlay.querySelector(".pawsoff-dog-walk");
       const idleVideo = overlay.querySelector(".pawsoff-dog-idle");

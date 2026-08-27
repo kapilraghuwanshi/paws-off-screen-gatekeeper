@@ -11,39 +11,57 @@
       <header class="header">
         <img src="icons/icon128.png" alt="" class="logo" />
         <h1>PawsOff</h1>
-        <p class="tagline">The cutest forced break</p>
       </header>
 
-      <label class="check">
-        <input id="enabled" type="checkbox" />
-        <span>Puppy protection active</span>
-      </label>
-
-      <label class="field">
-        Minutes before the puppy appears
-        <input id="usage-limit" type="number" min="1" max="240" step="1" />
-      </label>
-
-      <label class="field">
-        Break time (minutes)
-        <input id="break-time" type="number" min="1" max="60" step="1" />
-      </label>
-
-      <label class="field">
-        Target sites
-        <textarea id="sites" spellcheck="false"></textarea>
-      </label>
-      <p class="help">One per line, or separated by commas. URLs are OK.</p>
-
-      <div class="quick-actions">
-        <button id="add-site" type="button" class="ghost">Add this site</button>
-        <button id="reset-site" type="button" class="ghost">Reset timer</button>
+      <!-- Timer row -->
+      <div class="timer-row">
+        <label class="timer-field">
+          <span class="timer-label">Puppy appears after (min)</span>
+          <input id="usage-limit" type="number" min="1" max="240" step="1" />
+        </label>
+        <label class="timer-field">
+          <span class="timer-label">Puppy stays for (min)</span>
+          <input id="break-time" type="number" min="1" max="60" step="1" />
+        </label>
       </div>
 
-      <button id="save" type="button" class="save">Save 🐾</button>
-      <p id="site-status" class="status" aria-live="polite">Checking this tab...</p>
+      <!-- Target sites -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">Target sites</span>
+          <span class="info-icon" title="Check the sites you want PawsOff to guard. When you spend too long on them, the puppy takes over.">ⓘ</span>
+        </div>
+        <div class="site-grid" id="site-grid">
+          <!-- populated by JS -->
+        </div>
 
-      <a class="official" href="options.html" target="_blank">⚙ Advanced settings</a>
+        <label class="check other-sites-check">
+          <input id="other-sites-toggle" type="checkbox" />
+          <span>Other sites</span>
+          <span class="help-inline">Add one per line. URLs work too.</span>
+        </label>
+        <textarea id="other-sites" class="other-textarea" spellcheck="false" placeholder="example.com" style="display:none;"></textarea>
+      </section>
+
+      <!-- Usage -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">Usage</span>
+          <span class="info-icon" title="Time shows up here while you are on a target site.">ⓘ</span>
+        </div>
+        <p id="usage-info" class="usage-text">Time shows up here while you are on a target site.</p>
+      </section>
+
+      <!-- Actions -->
+      <button id="shoo-btn" type="button" class="shoo-btn" disabled>Shhh, puppy!</button>
+      <button id="save" type="button" class="save-btn">Save</button>
+
+      <footer class="footer">
+        <a class="footer-link" href="options.html" target="_blank">⚙ Advanced settings</a>
+        <span class="footer-sep">·</span>
+        <a class="footer-link" href="https://chromewebstore.google.com/detail/pawsoff/cbbldadaljaappjagbbhjnfkpiepcoal" target="_blank">View in Chrome Web Store</a>
+      </footer>
+      <p class="author">authored by Tech Monk — Kapil</p>
     </main>
     <script src="popup.js"></script>
   </body>

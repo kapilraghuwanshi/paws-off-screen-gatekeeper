@@ -4,9 +4,11 @@
   "description": "Spend too long on distracting sites? A real puppy takes over your screen. The cutest forced break.",
   "version": "1.0.0",
   "minimum_chrome_version": "116",
+  "author": "Tech Monk - Kapil",
+  "homepage_url": "https://github.com/kapilraghuwanshi/paws-off-screen-gatekeeper",
   "permissions": ["storage", "activeTab"],
   "action": {
-    "default_title": "PawsOff",
+    "default_title": "PawsOff — The cutest forced break",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",

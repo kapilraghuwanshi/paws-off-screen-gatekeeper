@@ -1,5 +1,17 @@
 const SETTINGS_KEY = "pawsOffSettings";
 const USAGE_KEY = "pawsOffUsage";
+
+const PREDEFINED_SITES = [
+  { label: "X", host: "x.com", aliases: ["twitter.com"] },
+  { label: "Facebook", host: "facebook.com" },
+  { label: "Reddit", host: "reddit.com" },
+  { label: "Instagram", host: "instagram.com" },
+  { label: "TikTok", host: "tiktok.com" },
+  { label: "YouTube", host: "youtube.com" },
+  { label: "LinkedIn", host: "linkedin.com" },
+  { label: "Threads", host: "threads.net" }
+];
+
 const DEFAULT_SETTINGS = {
   enabled: true,
   usageLimitMinutes: 30,
@@ -16,13 +28,13 @@ const DEFAULT_SETTINGS = {
   ]
 };
 
-const enabledInput = document.querySelector("#enabled");
 const usageLimitInput = document.querySelector("#usage-limit");
 const breakTimeInput = document.querySelector("#break-time");
-const sitesInput = document.querySelector("#sites");
-const statusNode = document.querySelector("#site-status");
-const addSiteButton = document.querySelector("#add-site");
-const resetSiteButton = document.querySelector("#reset-site");
+const siteGrid = document.querySelector("#site-grid");
+const otherSitesToggle = document.querySelector("#other-sites-toggle");
+const otherSitesTextarea = document.querySelector("#other-sites");
+const usageInfo = document.querySelector("#usage-info");
+const shooPuppy = document.querySelector("#shoo-btn");
 const saveButton = document.querySelector("#save");
 
 let activeHost = "";
@@ -31,9 +43,9 @@ let settings = DEFAULT_SETTINGS;
 let usage = {};
 
 document.addEventListener("DOMContentLoaded", init);
-addSiteButton.addEventListener("click", addCurrentSite);
-resetSiteButton.addEventListener("click", resetCurrentSite);
+shooPuppy.addEventListener("click", dismissOverlay);
 saveButton.addEventListener("click", saveSettings);
+otherSitesToggle.addEventListener("change", toggleOtherSites);
 
 async function init() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -44,68 +56,169 @@ async function init() {
   usage = data[USAGE_KEY] || {};
   matchedSite = getMatchedSite(activeHost, settings.sites);
 
+  buildSiteGrid();
   render();
 }
 
-async function addCurrentSite() {
-  if (!activeHost) return;
-  const sites = parseSites(sitesInput.value);
-  settings = { ...settings, sites: Array.from(new Set([...sites, activeHost])).sort() };
-  await chrome.storage.local.set({ [SETTINGS_KEY]: settings });
-  matchedSite = activeHost;
-  render("Current site added. 🐾");
+function buildSiteGrid() {
+  siteGrid.replaceChildren();
+  for (const site of PREDEFINED_SITES) {
+    const allHosts = [site.host, ...(site.aliases || [])];
+    const isChecked = allHosts.some((h) => settings.sites.includes(h));
+
+    const label = document.createElement("label");
+    label.className = "site-check";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = isChecked;
+    checkbox.dataset.host = site.host;
+    if (site.aliases) checkbox.dataset.aliases = site.aliases.join(",");
+
+    const span = document.createElement("span");
+    span.className = "site-name";
+    span.textContent = site.label;
+
+    label.append(checkbox, span);
+    siteGrid.append(label);
+  }
 }
 
-async function resetCurrentSite() {
-  if (!matchedSite) return;
-  usage[matchedSite] = { usedMs: 0, breakUntil: 0, updatedAt: Date.now() };
-  await chrome.storage.local.set({ [USAGE_KEY]: usage });
-  render("Timer reset. Fresh start! 🐶");
+function toggleOtherSites() {
+  const show = otherSitesToggle.checked;
+  otherSitesTextarea.style.display = show ? "block" : "none";
 }
 
-async function saveSettings() {
-  settings = {
-    ...settings,
-    enabled: enabledInput.checked,
-    usageLimitMinutes: clampNumber(usageLimitInput.value, 1, 240, 30),
-    breakMinutes: clampNumber(breakTimeInput.value, 1, 60, 5),
-    sites: parseSites(sitesInput.value)
-  };
-  await chrome.storage.local.set({ [SETTINGS_KEY]: settings });
-  matchedSite = getMatchedSite(activeHost, settings.sites);
-  render("Saved. Puppy is ready. 🐕");
-}
-
-function render(message = "") {
-  enabledInput.checked = Boolean(settings.enabled);
+function render() {
   usageLimitInput.value = Number(settings.usageLimitMinutes || 30);
   breakTimeInput.value = Number(settings.breakMinutes || 5);
-  sitesInput.value = (settings.sites || []).join("\n");
 
-  addSiteButton.disabled = !activeHost || Boolean(getMatchedSite(activeHost, parseSites(sitesInput.value)));
-  resetSiteButton.disabled = !matchedSite;
-
-  if (message) {
-    statusNode.textContent = message;
-    return;
+  // Populate "other sites" textarea with sites not in PREDEFINED_SITES
+  const predefinedHosts = new Set();
+  for (const site of PREDEFINED_SITES) {
+    predefinedHosts.add(site.host);
+    if (site.aliases) site.aliases.forEach((a) => predefinedHosts.add(a));
+  }
+  const otherSites = (settings.sites || []).filter((s) => !predefinedHosts.has(s));
+  if (otherSites.length > 0) {
+    otherSitesToggle.checked = true;
+    otherSitesTextarea.style.display = "block";
+    otherSitesTextarea.value = otherSites.join("\n");
+  } else {
+    otherSitesToggle.checked = false;
+    otherSitesTextarea.style.display = "none";
+    otherSitesTextarea.value = "";
   }
 
+  // Usage info
+  updateUsageInfo();
+
+  // Shoo button: enabled only if the current site is in break
+  updateShooButton();
+}
+
+function updateUsageInfo() {
   if (!activeHost) {
-    statusNode.textContent = "This page cannot be tracked.";
+    usageInfo.textContent = "This page cannot be tracked.";
     return;
   }
 
   if (!matchedSite) {
-    statusNode.textContent = `${activeHost} is not guarded yet.`;
+    usageInfo.textContent = `${activeHost} is not guarded yet.`;
     return;
   }
 
   const state = usage[matchedSite] || {};
-  const usedText = formatDuration(Number(state.usedMs || 0));
-  statusNode.textContent = `${matchedSite} guarded. Used ${usedText}.`;
+  const usedMs = Number(state.usedMs || 0);
+  const breakUntil = Number(state.breakUntil || 0);
+  const now = Date.now();
+
+  if (breakUntil > now) {
+    const remaining = formatDuration(breakUntil - now);
+    usageInfo.innerHTML = `<strong>${matchedSite}</strong> — on break. Unlocks in <strong>${remaining}</strong>`;
+  } else {
+    usageInfo.innerHTML = `<strong>${matchedSite}</strong> — used <strong>${formatDuration(usedMs)}</strong>`;
+  }
 }
 
-function parseSites(value) {
+function updateShooButton() {
+  if (!matchedSite) {
+    shooPuppy.disabled = true;
+    return;
+  }
+  const state = usage[matchedSite] || {};
+  const breakUntil = Number(state.breakUntil || 0);
+  shooPuppy.disabled = breakUntil <= Date.now();
+}
+
+async function dismissOverlay() {
+  if (!matchedSite) return;
+
+  // Reset usage and break for matched site
+  usage[matchedSite] = { usedMs: 0, breakUntil: 0, updatedAt: Date.now() };
+  await chrome.storage.local.set({ [USAGE_KEY]: usage });
+
+  // Send message to content script to remove overlay immediately
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (tab?.id) {
+    try {
+      await chrome.tabs.sendMessage(tab.id, { type: "PAWSOFF_DISMISS" });
+    } catch {
+      // Tab might not have content script
+    }
+  }
+
+  shooPuppy.disabled = true;
+  updateUsageInfo();
+}
+
+async function saveSettings() {
+  // Collect checked predefined sites
+  const checkedSites = [];
+  const checkboxes = siteGrid.querySelectorAll("input[type='checkbox']");
+  for (const cb of checkboxes) {
+    if (cb.checked) {
+      checkedSites.push(cb.dataset.host);
+      if (cb.dataset.aliases) {
+        checkedSites.push(...cb.dataset.aliases.split(","));
+      }
+    }
+  }
+
+  // Collect "other sites" from textarea
+  let otherSites = [];
+  if (otherSitesToggle.checked) {
+    otherSites = parseCustomSites(otherSitesTextarea.value);
+  }
+
+  const allSites = Array.from(new Set([...checkedSites, ...otherSites])).sort();
+
+  settings = {
+    ...settings,
+    enabled: true,
+    usageLimitMinutes: clampNumber(usageLimitInput.value, 1, 240, 30),
+    breakMinutes: clampNumber(breakTimeInput.value, 1, 60, 5),
+    sites: allSites
+  };
+
+  await chrome.storage.local.set({ [SETTINGS_KEY]: settings });
+  matchedSite = getMatchedSite(activeHost, settings.sites);
+
+  // Visual feedback
+  saveButton.textContent = "Saved 🐾";
+  saveButton.classList.add("saved");
+  setTimeout(() => {
+    saveButton.textContent = "Save";
+    saveButton.classList.remove("saved");
+  }, 1800);
+
+  updateUsageInfo();
+  updateShooButton();
+}
+
+// ===== Helpers =====
+
+function parseCustomSites(value) {
   return Array.from(
     new Set(
       String(value || "")

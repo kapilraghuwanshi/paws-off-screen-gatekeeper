@@ -14,7 +14,9 @@
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  background: transparent;
+  background: rgba(10, 8, 6, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   pointer-events: auto;
 }
 
@@ -31,18 +33,25 @@
 
 /* ===== Copy block ===== */
 .pawsoff-copy {
-  flex: 1;
+  flex: 0 1 auto;
   position: relative;
   z-index: 100;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 20px;
-  max-width: 50vw;
+  gap: 14px;
+  max-width: 44vw;
   margin-bottom: 0;
   text-align: left;
-  padding-left: 5vw;
+  padding: clamp(20px, 3vw, 36px) clamp(24px, 4vw, 44px);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(20, 14, 10, 0.92), rgba(35, 22, 12, 0.88));
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 .pawsoff-kicker {
@@ -63,13 +72,13 @@
 
 .pawsoff-title {
   margin: 0;
-  color: #fff;
+  color: #FF6537;
   font-size: clamp(48px, 8vw, 110px);
   font-weight: 950;
   letter-spacing: -0.02em;
   line-height: 0.9;
   animation: pawsoffHeadline 1.5s ease both;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 4px 24px rgba(255, 101, 55, 0.3), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .pawsoff-subtitle {
@@ -87,17 +96,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: min(40vw, 440px);
-  min-height: 136px;
-  margin-top: 10px;
-  padding: 20px 32px;
-  border-radius: 36px;
+  min-width: min(36vw, 380px);
+  min-height: 100px;
+  margin-top: 6px;
+  padding: 16px 28px;
+  border-radius: 28px;
   color: #ffffff;
   background: linear-gradient(135deg, rgba(26, 18, 10, 0.95), rgba(60, 30, 10, 0.9));
   box-shadow:
     0 28px 80px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  font-size: clamp(60px, 13vw, 160px);
+  font-size: clamp(48px, 10vw, 120px);
   font-weight: 950;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -108,23 +117,49 @@
 }
 
 .pawsoff-hint {
-  margin-top: 8px;
+  margin-top: 4px;
   color: rgba(255, 255, 255, 0.7);
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+/* ===== Dismiss button ===== */
+.pawsoff-dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #FF6537, #e84e1f);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(255, 101, 55, 0.35);
+  transition: all 0.25s;
+  animation: pawsoffPop 0.65s ease 0.3s both;
+}
+
+.pawsoff-dismiss:hover {
+  background: linear-gradient(135deg, #ff7b52, #FF6537);
+  box-shadow: 0 10px 36px rgba(255, 101, 55, 0.45);
+  transform: translateY(-2px);
 }
 
 /* ===== Giant Puppy Overlay ===== */
 .pawsoff-dog-wrap {
   position: absolute;
-  bottom: -2vh;
+  bottom: 0;
   z-index: 90;
-  height: 100vh;
+  height: 92vh;
   display: flex;
   align-items: flex-end;
-  filter: drop-shadow(0 60px 80px rgba(80, 45, 20, 0.45));
+  filter: drop-shadow(0 40px 60px rgba(80, 45, 20, 0.4));
 }
 
 /* Husky: Left side of the screen */
@@ -153,7 +188,8 @@
 }
 
 .pawsoff-dog-wrap video {
-  height: 140vh; /* 2x massive size */
+  height: 88vh;
+  max-height: 100%;
   width: auto;
   object-fit: contain;
   transform-origin: bottom center;
