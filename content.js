@@ -92,7 +92,7 @@
 
     const elapsed = Math.min(now - lastTick, 2000);
     lastTick = now;
-    if (document.visibilityState !== "visible" || !window.hasFocus()) return;
+    if (document.visibilityState !== "visible" || !document.hasFocus()) return;
 
     state.usedMs = Number(state.usedMs || 0) + elapsed;
     state.updatedAt = now;
@@ -122,15 +122,16 @@
         <div class="pawsoff-stage">
           <div class="pawsoff-copy">
             <div class="pawsoff-kicker">🐶 PawsOff is on duty</div>
-            <h1 class="pawsoff-title">Paws off.</h1>
+            <h1 class="pawsoff-title">PawsOff</h1>
             <p class="pawsoff-subtitle">This site has had enough of you for now.<br>Stretch, blink, sip water — and let the puppy supervise.</p>
             <div class="pawsoff-countdown" aria-live="polite">00:00</div>
             <div class="pawsoff-hint">The page unlocks automatically when the countdown ends.</div>
             <button class="pawsoff-dismiss" type="button">Shhhhh Puppy 🐾</button>
+            <div class="pawsoff-author">Made in India 🇮🇳 by Tech Monk - Kapil</div>
           </div>
           <div class="pawsoff-dog-wrap pawsoff-${breed}">
             <video class="pawsoff-dog-walk pawsoff-slide-in" src="${walkVideoUrl}" autoplay muted playsinline></video>
-            <video class="pawsoff-dog-idle pawsoff-dog-hidden" src="${idleVideoUrl}" muted loop playsinline></video>
+            <video class="pawsoff-dog-idle pawsoff-dog-hidden" src="${idleVideoUrl}" muted playsinline></video>
           </div>
         </div>
       `;
@@ -156,7 +157,17 @@
         walkVideo.classList.add("pawsoff-dog-hidden");
         idleVideo.classList.remove("pawsoff-dog-hidden");
         idleVideo.classList.add("pawsoff-idle-visible");
-        idleVideo.play();
+        idleVideo.play().catch(err => console.warn("PawsOff idle video autoplay prevented", err));
+      });
+
+      // Play idle video once, pause on last frame, and replay after 1 minute
+      idleVideo.addEventListener("ended", () => {
+        setTimeout(() => {
+          if (overlay && document.documentElement.contains(overlay)) {
+            idleVideo.currentTime = 0;
+            idleVideo.play();
+          }
+        }, 60000);
       });
     }
     countdownNode.textContent = formatDuration(remainingMs);

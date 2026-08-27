@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>PawsOff — Overlay Test</title>
@@ -11,9 +12,11 @@
       background: #0f0f0f;
       color: #fff;
     }
+
     .fake-yt {
       padding: 60px 40px;
     }
+
     .fake-yt-header {
       display: flex;
       align-items: center;
@@ -23,19 +26,30 @@
       font-size: 20px;
       font-weight: 700;
     }
-    .fake-yt-header span { color: #ff0000; font-size: 28px; }
-    .fake-yt h2 { color: #aaa; margin-top: 40px; }
+
+    .fake-yt-header span {
+      color: #ff0000;
+      font-size: 28px;
+    }
+
+    .fake-yt h2 {
+      color: #aaa;
+      margin-top: 40px;
+    }
+
     .fake-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-top: 20px;
     }
+
     .fake-thumb {
       aspect-ratio: 16/9;
       border-radius: 12px;
       background: linear-gradient(135deg, #333, #222);
     }
+
     .fake-title {
       margin-top: 8px;
       font-size: 14px;
@@ -45,6 +59,7 @@
   <!-- Load the actual extension overlay CSS -->
   <link rel="stylesheet" href="content.css" />
 </head>
+
 <body>
   <!-- Fake YouTube page behind the overlay -->
   <div class="fake-yt-header">
@@ -53,14 +68,38 @@
   <div class="fake-yt">
     <h2>Recommended</h2>
     <div class="fake-grid">
-      <div><div class="fake-thumb"></div><div class="fake-title">How I Built a Chrome Extension in 24 Hours</div></div>
-      <div><div class="fake-thumb"></div><div class="fake-title">10 Hour Lo-Fi Hip Hop Mix</div></div>
-      <div><div class="fake-thumb"></div><div class="fake-title">Why You Keep Doom-Scrolling</div></div>
-      <div><div class="fake-thumb"></div><div class="fake-title">Cute Puppies Compilation 2026</div></div>
-      <div><div class="fake-thumb"></div><div class="fake-title">Building With AI - Full Tutorial</div></div>
-      <div><div class="fake-thumb"></div><div class="fake-title">The Science of Procrastination</div></div>
-      <div><div class="fake-thumb"></div><div class="fake-title">Best Productivity Chrome Extensions</div></div>
-      <div><div class="fake-thumb"></div><div class="fake-title">Dog Training for Beginners</div></div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">How I Built a Chrome Extension in 24 Hours</div>
+      </div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">10 Hour Lo-Fi Hip Hop Mix</div>
+      </div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">Why You Keep Doom-Scrolling</div>
+      </div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">Cute Puppies Compilation 2026</div>
+      </div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">Building With AI - Full Tutorial</div>
+      </div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">The Science of Procrastination</div>
+      </div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">Best Productivity Chrome Extensions</div>
+      </div>
+      <div>
+        <div class="fake-thumb"></div>
+        <div class="fake-title">Dog Training for Beginners</div>
+      </div>
     </div>
   </div>
 
@@ -69,11 +108,15 @@
     <div class="pawsoff-stage">
       <div class="pawsoff-copy">
         <div class="pawsoff-kicker">🐶 PawsOff is on duty</div>
-        <h1 class="pawsoff-title">Paws off.</h1>
-        <p class="pawsoff-subtitle">This site has had enough of you for now.<br>Stretch, blink, sip water — and let the puppy supervise.</p>
+        <h1 class="pawsoff-title">PawsOff</h1>
+        <p class="pawsoff-subtitle">This site has had enough of you for now.<br>Stretch, blink, sip water — and let the
+          puppy supervise.</p>
         <div class="pawsoff-countdown" aria-live="polite">04:59</div>
         <div class="pawsoff-hint">The page unlocks automatically when the countdown ends.</div>
-        <button class="pawsoff-dismiss" type="button" onclick="document.getElementById('pawsoff-overlay').style.display='none'; document.getElementById('trigger-btn').style.display='block';">Shhhhh Puppy 🐾</button>
+        <button class="pawsoff-dismiss" type="button"
+          onclick="document.getElementById('pawsoff-overlay').style.display='none'; document.getElementById('trigger-btn').style.display='block';">Shhhhh
+          Puppy 🐾</button>
+        <div class="pawsoff-author">Made in India 🇮🇳 by Tech Monk - Kapil</div>
       </div>
       <div class="pawsoff-dog-wrap">
         <!-- Videos will be injected here via JS to simulate content.js -->
@@ -83,10 +126,14 @@
 
   <!-- Interaction Trigger Button to satisfy Chrome Autoplay policies -->
   <div style="position: fixed; top: 20px; right: 20px; z-index: 2147483647;">
-    <button id="trigger-btn" style="padding: 12px 24px; font-size: 16px; font-weight: bold; background: #ff0000; color: white; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">Trigger PawsOff Break</button>
+    <button id="trigger-btn"
+      style="padding: 12px 24px; font-size: 16px; font-weight: bold; background: #ff0000; color: white; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">Trigger
+      PawsOff Break</button>
   </div>
 
-  <div id="error-log" style="position: fixed; bottom: 20px; left: 20px; z-index: 2147483647; color: red; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px; font-family: monospace; display: none;"></div>
+  <div id="error-log"
+    style="position: fixed; bottom: 20px; left: 20px; z-index: 2147483647; color: red; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 4px; font-family: monospace; display: none;">
+  </div>
 
   <script>
     const triggerBtn = document.getElementById("trigger-btn");
@@ -96,11 +143,11 @@
     triggerBtn.addEventListener("click", () => {
       triggerBtn.style.display = "none";
       overlay.style.display = "block";
-      
+
       const breeds = ["husky", "labrador"];
       const breed = breeds[Math.floor(Math.random() * breeds.length)];
       console.log("Selected breed for test:", breed);
-      
+
       const wrap = document.querySelector(".pawsoff-dog-wrap");
       wrap.className = `pawsoff-dog-wrap pawsoff-${breed}`;
       wrap.innerHTML = `
@@ -151,4 +198,5 @@
     }, 1000);
   </script>
 </body>
+
 </html>

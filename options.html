@@ -1,69 +1,80 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PawsOff Settings</title>
-    <link rel="stylesheet" href="options.css" />
-  </head>
-  <body>
-    <main class="shell">
-      <section class="hero">
-        <div>
-          <img src="icons/icon128.png" alt="" class="logo" />
-          <h1>PawsOff</h1>
-          <p>Choose the sites, pick your limit, and let the puppy politely occupy the screen when scrolling gets too comfortable.</p>
-        </div>
-        <label class="switch">
-          <input id="enabled" type="checkbox" />
-          <span></span>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PawsOff Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <img src="icons/icon128.png" alt="" class="logo" />
+        <h1>PawsOff</h1>
+        <p>Choose the sites, pick your limit, and let the puppy politely occupy the screen when scrolling gets too
+          comfortable.</p>
+      </div>
+      <label class="switch">
+        <input id="enabled" type="checkbox" />
+        <span></span>
+      </label>
+    </section>
+
+    <section class="panel">
+      <h2>⏱ Timer</h2>
+      <div class="grid">
+        <label>
+          Usage limit
+          <select id="usage-limit">
+            <option value="1">1 minute</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="45">45 minutes</option>
+            <option value="60">60 minutes</option>
+          </select>
         </label>
-      </section>
+        <label>
+          Puppy break
+          <select id="break-time">
+            <option value="1">1 minute</option>
+            <option value="2">2 minutes</option>
+            <option value="5">5 minutes</option>
+            <option value="10">10 minutes</option>
+          </select>
+        </label>
+      </div>
+    </section>
 
-      <section class="panel">
-        <h2>⏱ Timer</h2>
-        <div class="grid">
-          <label>
-            Usage limit
-            <select id="usage-limit">
-              <option value="1">1 minute</option>
-              <option value="15">15 minutes</option>
-              <option value="30">30 minutes</option>
-              <option value="45">45 minutes</option>
-              <option value="60">60 minutes</option>
-            </select>
-          </label>
-          <label>
-            Puppy break
-            <select id="break-time">
-              <option value="1">1 minute</option>
-              <option value="2">2 minutes</option>
-              <option value="5">5 minutes</option>
-              <option value="10">10 minutes</option>
-            </select>
-          </label>
-        </div>
-      </section>
+    <section class="panel">
+      <h2>🌐 Guarded Sites</h2>
 
-      <section class="panel">
-        <h2>🌐 Guarded Sites</h2>
-        <form id="site-form" class="site-form">
-          <input id="site-input" type="text" placeholder="example.com or https://example.com" autocomplete="off" />
-          <button type="submit">Add</button>
-        </form>
-        <div id="site-list" class="site-list"></div>
-      </section>
+      <div class="site-grid" id="site-grid">
+        <!-- populated by JS -->
+      </div>
 
-      <section class="panel actions">
-        <button id="save" type="button">Save settings 🐾</button>
-        <button id="reset-usage" type="button" class="secondary">Reset all timers</button>
-        <p id="save-state" aria-live="polite"></p>
-      </section>
-      <footer class="options-footer">
-        <a class="options-footer-link" href="https://chromewebstore.google.com/detail/pawsoff/cbbldadaljaappjagbbhjnfkpiepcoal" target="_blank">View in Chrome Web Store ↗</a>
-        <p class="options-author">authored by Tech Monk — Kapil</p>
-      </footer>
-    </main>
-    <script src="options.js"></script>
-  </body>
+      <form id="site-form" class="site-form">
+        <input id="site-input" type="text" placeholder="example.com or https://example.com" autocomplete="off" />
+        <button type="submit">Add</button>
+      </form>
+      <div id="site-list" class="site-list"></div>
+    </section>
+
+    <section class="panel actions">
+      <button id="save" type="button">Save settings 🐾</button>
+      <button id="reset-usage" type="button" class="secondary">Reset all timers</button>
+      <p id="save-state" aria-live="polite"></p>
+    </section>
+    <footer class="options-footer">
+      <a class="options-footer-link"
+        href="https://chromewebstore.google.com/detail/pawsoff/cbbldadaljaappjagbbhjnfkpiepcoal" target="_blank">View in
+        Chrome Web Store ↗</a>
+      <p class="options-author">Made in India 🇮🇳 by Tech Monk - Kapil</p>
+    </footer>
+  </main>
+  <script src="options.js"></script>
+</body>
+
 </html>

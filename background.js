@@ -23,6 +23,10 @@ chrome.runtime.onInstalled.addListener(async () => {
   }
 });
 
+chrome.action.onClicked.addListener(() => {
+  chrome.runtime.openOptionsPage();
+});
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message?.type === "OPEN_OPTIONS") {
     chrome.runtime.openOptionsPage();
