@@ -1,5 +1,8 @@
 venv/
+_local/
+promo/
 *.zip
 .DS_Store
 __pycache__/
 *.pyc
+/_local
