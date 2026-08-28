@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="/paws-off-screen-gatekeeper/" />
   <title>PawsOff — The cutest forced break for Chrome</title>
   <meta name="description" content="PawsOff is a free Chrome extension that sends an adorable puppy to block your screen when you've been doom-scrolling too long. Free, open-source, and privacy-first." />
   <meta property="og:title" content="PawsOff — The cutest forced break for Chrome" />
   <meta property="og:description" content="Set a timer. Get pawed. Take a break. The puppy will supervise." />
   <meta property="og:image" content="https://kapilraghuwanshi.github.io/paws-off-screen-gatekeeper/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="../icons/icon128.png" type="image/png" />
+  <link rel="icon" href="icons/icon128.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -484,26 +485,65 @@
       box-shadow: 0 10px 30px rgba(255,101,55,0.5);
     }
 
-    .demo-dog-area {
+    /* ===== Real dog video (mirrors content.css) ===== */
+    .demo-dog-wrap {
       position: absolute;
       bottom: 0;
-      right: 0;
-      width: 55%;
+      z-index: 90;
       height: 100%;
       display: flex;
       align-items: flex-end;
-      justify-content: flex-end;
+      filter: drop-shadow(0 20px 40px rgba(80,45,20,0.35));
       pointer-events: none;
     }
 
-    .demo-dog-emoji {
-      font-size: clamp(80px, 14vw, 160px);
-      line-height: 1;
-      filter: drop-shadow(0 8px 40px rgba(255,101,55,0.2));
-      animation: dogBounce 2s ease-in-out infinite;
-      user-select: none;
-      margin-bottom: 20px;
-      margin-right: 20px;
+    .demo-dog-wrap.pawsoff-husky {
+      left: -2%;
+      right: auto;
+      width: auto;
+      justify-content: flex-start;
+    }
+
+    .demo-dog-wrap.pawsoff-labrador,
+    .demo-dog-wrap.pawsoff-golden,
+    .demo-dog-wrap.pawsoff-corgi {
+      left: 55%;
+      right: auto;
+      transform: translateX(-50%);
+      width: auto;
+      justify-content: center;
+    }
+
+    .demo-dog-wrap video {
+      height: 100%;
+      max-height: 500px;
+      width: auto;
+      object-fit: contain;
+      transform-origin: bottom center;
+      clip-path: polygon(0 0, 100% 0, 100% 88%, 78% 88%, 78% 100%, 0 100%);
+    }
+
+    .pawsoff-dog-hidden  { display: none !important; }
+    .pawsoff-idle-visible { display: block !important; }
+
+    .pawsoff-slide-in {
+      animation: pawsoffHuskySlideIn 3.5s cubic-bezier(0.15, 0.85, 0.2, 1) forwards;
+    }
+
+    .pawsoff-labrador .pawsoff-slide-in,
+    .pawsoff-golden   .pawsoff-slide-in,
+    .pawsoff-corgi    .pawsoff-slide-in {
+      animation: pawsoffLabZoom 4s cubic-bezier(0.15, 0.85, 0.2, 1) forwards;
+    }
+
+    @keyframes pawsoffHuskySlideIn {
+      from { transform: translateX(-100vw); opacity: 0.9; }
+      to   { transform: translateX(0);      opacity: 1; }
+    }
+
+    @keyframes pawsoffLabZoom {
+      from { transform: scale(0.4); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
     }
 
     /* Demo trigger button */
@@ -741,10 +781,6 @@
       50%       { box-shadow: 0 20px 80px rgba(255,101,55,0.22), 0 0 0 1px rgba(255,255,255,0.1) inset; }
     }
 
-    @keyframes dogBounce {
-      0%, 100% { transform: translateY(0) rotate(-2deg); }
-      50%       { transform: translateY(-12px) rotate(2deg); }
-    }
 
     /* ===== Responsive ===== */
     @media (max-width: 700px) {
@@ -762,7 +798,7 @@
   <!-- ===== Nav ===== -->
   <nav>
     <a class="nav-logo" href="#">
-      <img src="../icons/icon128.png" alt="PawsOff logo" />
+      <img src="icons/icon128.png" alt="PawsOff logo" />
       PawsOff
     </a>
     <div class="nav-links">
@@ -842,9 +878,7 @@
               <div class="demo-hint">The page unlocks automatically when the countdown ends.</div>
               <button class="demo-dismiss" id="demo-dismiss">Shhhhh Puppy 🐾</button>
             </div>
-            <div class="demo-dog-area">
-              <div class="demo-dog-emoji">🐶</div>
-            </div>
+            <div class="demo-dog-wrap" id="demo-dog-wrap"></div>
           </div>
         </div>
 
@@ -962,6 +996,7 @@
     const dismiss = document.getElementById('demo-dismiss');
     const triggerWrap = document.getElementById('trigger-wrap');
     const cdEl = document.getElementById('demo-cd');
+    const dogWrap = document.getElementById('demo-dog-wrap');
     let cdInterval = null;
 
     function startCountdown() {
@@ -977,15 +1012,50 @@
       }, 1000);
     }
 
+    function loadDog() {
+      // Pick a random breed for variety
+      const breeds = ['husky', 'labrador', 'golden', 'corgi'];
+      const breed = breeds[Math.floor(Math.random() * breeds.length)];
+      dogWrap.innerHTML = '';
+      dogWrap.className = 'demo-dog-wrap pawsoff-' + breed;
+
+      const walk = document.createElement('video');
+      walk.className = 'pawsoff-dog-walk pawsoff-slide-in';
+      walk.src = 'assets/' + breed + '_walk.webm';
+      walk.autoplay = true;
+      walk.muted = true;
+      walk.playsInline = true;
+
+      const idle = document.createElement('video');
+      idle.className = 'pawsoff-dog-idle pawsoff-dog-hidden';
+      idle.src = 'assets/' + breed + '_idle.webm';
+      idle.muted = true;
+      idle.loop = true;
+      idle.playsInline = true;
+
+      dogWrap.appendChild(walk);
+      dogWrap.appendChild(idle);
+
+      walk.play().catch(() => {});
+      walk.addEventListener('ended', () => {
+        walk.classList.add('pawsoff-dog-hidden');
+        idle.classList.remove('pawsoff-dog-hidden');
+        idle.classList.add('pawsoff-idle-visible');
+        idle.play().catch(() => {});
+      });
+    }
+
     trigger.addEventListener('click', () => {
       triggerWrap.style.display = 'none';
       overlay.classList.add('active');
+      loadDog();
       startCountdown();
     });
 
     dismiss.addEventListener('click', () => {
       overlay.classList.remove('active');
       triggerWrap.style.display = 'block';
+      dogWrap.innerHTML = '';
       clearInterval(cdInterval);
     });
   </script>
