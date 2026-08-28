@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy — PawsOff Chrome Extension</title>
+  <meta name="description" content="PawsOff Privacy Policy. PawsOff does not collect, store, or transmit any personal data or browsing history." />
+  <link rel="icon" href="../icons/icon128.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0a0806;
+      --surface: rgba(20, 14, 10, 0.92);
+      --border:  rgba(255,255,255,0.08);
+      --orange:  #FF6537;
+      --text:    #f5f0ea;
+      --muted:   rgba(255,255,255,0.55);
+    }
+
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(10, 8, 6, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo img { width: 32px; border-radius: 8px; }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .btn-back:hover { color: var(--text); }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 80px;
+    }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,101,55,0.25);
+      background: rgba(255,101,55,0.07);
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--orange);
+      text-shadow: 0 4px 24px rgba(255,101,55,0.2);
+    }
+
+    .effective-date {
+      margin-top: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .content {
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .section-block {
+      padding: 32px 36px;
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .section-block h2 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-block p,
+    .section-block li {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .section-block ul {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .section-block li strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .highlight-box {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: rgba(255,101,55,0.06);
+      border: 1px solid rgba(255,101,55,0.18);
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .contact-link {
+      color: var(--orange);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .contact-link:hover { text-decoration: underline; }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 36px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    footer p { font-size: 13px; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="../icons/icon128.png" alt="PawsOff" />
+      PawsOff
+    </a>
+    <a class="btn-back" href="index.html">← Back to Home</a>
+  </nav>
+
+  <div class="page-wrap">
+    <div class="page-badge">🔒 Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="effective-date">Effective Date: August 28, 2026 · Last updated: August 28, 2026</p>
+
+    <div class="content">
+
+      <div class="section-block">
+        <h2>🐾 The Short Version</h2>
+        <p>PawsOff does not collect, store, transmit, or share any of your personal data, browsing history, or any other information. Everything the extension does happens entirely on your own device.</p>
+        <div class="highlight-box">
+          Zero data leaves your browser. Ever.
+        </div>
+      </div>
+
+      <div class="section-block">
+        <h2>📦 What Data We Collect</h2>
+        <p><strong>None.</strong> PawsOff does not collect any personally identifiable information, analytics, crash reports, or telemetry of any kind. The only data that exists is your personal preferences (site list, timers), which are stored locally in your browser using the Chrome <code>storage.local</code> API and never leave your device.</p>
+      </div>
+
+      <div class="section-block">
+        <h2>🔑 Permissions We Use &amp; Why</h2>
+        <ul>
+          <li><strong>storage:</strong> To save your preferences (guarded sites list, usage limit, break duration) locally on your device. This data is never transmitted anywhere.</li>
+          <li><strong>activeTab / scripting:</strong> To detect when you navigate to one of your guarded sites so the overlay can be shown at the right time. This detection is entirely local.</li>
+          <li><strong>webNavigation:</strong> To monitor page navigations and accurately measure your time spent on guarded sites. No URLs or page data are stored or transmitted.</li>
+        </ul>
+      </div>
+
+      <div class="section-block">
+        <h2>🌐 Third-Party Services</h2>
+        <p>PawsOff does not use any third-party analytics, advertising networks, tracking pixels, crash reporting tools, or remote code of any kind. There are no external servers that receive any data from this extension.</p>
+      </div>
+
+      <div class="section-block">
+        <h2>🔄 Data Sharing &amp; Sales</h2>
+        <p>Since we collect no data, there is nothing to share, sell, or transfer to third parties. We certify the following:</p>
+        <ul>
+          <li>We do <strong>not</strong> sell or transfer user data to third parties.</li>
+          <li>We do <strong>not</strong> use or transfer user data for purposes unrelated to the extension's core functionality.</li>
+          <li>We do <strong>not</strong> use or transfer user data to determine creditworthiness or for lending purposes.</li>
+        </ul>
+      </div>
+
+      <div class="section-block">
+        <h2>🛡 Open Source &amp; Transparency</h2>
+        <p>PawsOff is fully open-source. You can inspect every line of code in our <a class="contact-link" href="https://github.com/kapilraghuwanshi/paws-off-screen-gatekeeper" target="_blank" rel="noopener">GitHub repository</a> to verify these claims for yourself. We have nothing to hide.</p>
+      </div>
+
+      <div class="section-block">
+        <h2>✉️ Contact</h2>
+        <p>If you have any questions about this privacy policy or the extension, please reach out via our GitHub repository:</p>
+        <p style="margin-top: 12px;">
+          <a class="contact-link" href="https://github.com/kapilraghuwanshi/paws-off-screen-gatekeeper/issues" target="_blank" rel="noopener">
+            → Open an issue on GitHub
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 PawsOff · Made in India 🇮🇳 by Tech Monk - Kapil</p>
+    <a href="index.html">← Back to Home</a>
+  </footer>
+
+</body>
+</html>
