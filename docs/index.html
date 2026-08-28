@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <base href="/paws-off-screen-gatekeeper/" />
+
   <title>PawsOff — The cutest forced break for Chrome</title>
   <meta name="description" content="PawsOff is a free Chrome extension that sends an adorable puppy to block your screen when you've been doom-scrolling too long. Free, open-source, and privacy-first." />
   <meta property="og:title" content="PawsOff — The cutest forced break for Chrome" />
@@ -978,7 +978,7 @@
   <!-- ===== Footer ===== -->
   <footer>
     <div class="footer-left">
-      <img src="../icons/icon128.png" alt="PawsOff" />
+      <img src="icons/icon128.png" alt="PawsOff" />
       PawsOff
     </div>
     <div class="footer-links">
@@ -1013,8 +1013,8 @@
     }
 
     function loadDog() {
-      // Pick a random breed for variety
-      const breeds = ['husky', 'labrador', 'golden', 'corgi'];
+      // Alternate between husky and labrador
+      const breeds = ['husky', 'labrador'];
       const breed = breeds[Math.floor(Math.random() * breeds.length)];
       dogWrap.innerHTML = '';
       dogWrap.className = 'demo-dog-wrap pawsoff-' + breed;
