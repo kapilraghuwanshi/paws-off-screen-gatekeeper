@@ -75,7 +75,7 @@ PawsOff stores your settings (site list, timers) locally on your device using Ch
 
 If PawsOff made you smile (or actually helped you take a break), consider supporting:
 
-- ☕ [Buy Me a Coffee](https://www.buymeacoffee.com/kapilraghuwanshi)
+- ☕ [Buy Me a Coffee](https://www.buymeacoffee.com/techygeeky)
 - ⭐ Star this repo — it helps more than you think!
 
 ---
