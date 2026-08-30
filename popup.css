@@ -20,15 +20,19 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   width: 400px;
   min-width: 400px;
+  max-width: 400px;
   margin: 0;
+}
+
+body {
   color: var(--text);
   background: var(--bg);
 }
 
-button, input, textarea {
+button, input, textarea, select {
   font: inherit;
 }
 
@@ -39,7 +43,7 @@ button {
 
 /* ===== Layout ===== */
 .popup {
-  padding: 28px 28px 22px;
+  padding: 16px 20px 16px;
 }
 
 /* ===== Header ===== */
@@ -48,7 +52,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .logo {
@@ -65,12 +69,54 @@ h1 {
   color: var(--text);
 }
 
+.switch {
+  flex: 0 0 auto;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+}
+
+.switch span {
+  display: block;
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.25s ease;
+}
+
+.switch span::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  content: "";
+  transition: translate 0.25s ease;
+}
+
+.switch input:checked + span {
+  background: linear-gradient(135deg, #ff6537, #ff8c55);
+}
+
+.switch input:checked + span::after {
+  translate: 24px 0;
+}
+
 /* ===== Timer row ===== */
 .timer-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 
 .timer-field {
@@ -86,28 +132,32 @@ h1 {
   letter-spacing: 0.01em;
 }
 
-.timer-field input {
+.timer-field input,
+.timer-field select {
   width: 100%;
-  height: 46px;
-  padding: 0 14px;
+  height: 38px;
+  padding: 0 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: #fff;
   background: var(--check-bg);
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 800;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  appearance: none;
 }
 
-.timer-field input:focus {
+.timer-field input:focus,
+.timer-field select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 /* ===== Section ===== */
 .section {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .section-header {
@@ -242,8 +292,8 @@ h1 {
 
 .other-textarea {
   width: 100%;
-  min-height: 72px;
-  max-height: 140px;
+  min-height: 54px;
+  max-height: 100px;
   margin-top: 8px;
   padding: 10px 14px;
   border: 1px solid var(--border);
@@ -281,13 +331,13 @@ h1 {
 .shoo-btn {
   display: block;
   width: 100%;
-  min-height: 44px;
-  margin-bottom: 10px;
+  min-height: 38px;
+  margin-bottom: 8px;
   border-radius: var(--radius);
   color: var(--text);
   background: var(--check-bg);
   border: 1px solid var(--border);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   transition: all 0.2s;
 }
@@ -305,11 +355,11 @@ h1 {
 .save-btn {
   display: block;
   width: 100%;
-  min-height: 48px;
+  min-height: 42px;
   border-radius: var(--radius);
   color: #ffffff;
   background: linear-gradient(135deg, #ff6537, #ff4411);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
   border: none;
   box-shadow: 0 6px 24px var(--accent-glow);
@@ -334,11 +384,29 @@ h1 {
 /* ===== Footer ===== */
 .footer {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 16px;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.footer-social a {
+  color: var(--text-muted);
+  transition: color 0.2s, transform 0.2s;
+  display: flex;
+  opacity: 0.7;
+}
+
+.footer-social a:hover {
+  color: var(--text);
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 .footer-sep {

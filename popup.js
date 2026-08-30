@@ -14,8 +14,8 @@ const PREDEFINED_SITES = [
 
 const DEFAULT_SETTINGS = {
   enabled: true,
-  usageLimitMinutes: 30,
-  breakMinutes: 5,
+  usageLimitMinutes: 2,
+  breakMinutes: 2,
   sites: [
     "x.com",
     "twitter.com",
@@ -36,6 +36,7 @@ const otherSitesTextarea = document.querySelector("#other-sites");
 const usageInfo = document.querySelector("#usage-info");
 const shooPuppy = document.querySelector("#shoo-btn");
 const saveButton = document.querySelector("#save");
+const enabledToggle = document.querySelector("#enabled");
 
 let activeHost = "";
 let matchedSite = "";
@@ -90,8 +91,9 @@ function toggleOtherSites() {
 }
 
 function render() {
-  usageLimitInput.value = Number(settings.usageLimitMinutes || 30);
-  breakTimeInput.value = Number(settings.breakMinutes || 5);
+  enabledToggle.checked = settings.enabled !== false;
+  usageLimitInput.value = String(settings.usageLimitMinutes || 2);
+  breakTimeInput.value = String(settings.breakMinutes || 2);
 
   // Populate "other sites" textarea with sites not in PREDEFINED_SITES
   const predefinedHosts = new Set();
@@ -103,7 +105,7 @@ function render() {
   if (otherSites.length > 0) {
     otherSitesToggle.checked = true;
     otherSitesTextarea.style.display = "block";
-    otherSitesTextarea.value = otherSites.join("\n");
+    otherSitesTextarea.value = otherSites.join(", ");
   } else {
     otherSitesToggle.checked = false;
     otherSitesTextarea.style.display = "none";
@@ -195,9 +197,9 @@ async function saveSettings() {
 
   settings = {
     ...settings,
-    enabled: true,
-    usageLimitMinutes: clampNumber(usageLimitInput.value, 1, 240, 30),
-    breakMinutes: clampNumber(breakTimeInput.value, 1, 60, 5),
+    enabled: enabledToggle.checked,
+    usageLimitMinutes: clampNumber(usageLimitInput.value, 1, 240, 2),
+    breakMinutes: clampNumber(breakTimeInput.value, 1, 60, 2),
     sites: allSites
   };
 

@@ -3,7 +3,7 @@
 > **The cutest forced break for Chrome.**  
 > A puppy takes over your screen when you've been doom-scrolling too long.
 
-[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Install%20Free-FF6537?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/pawsoff/fndochdepjhdgjncaaengjjkecennlk)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Install%20Free-FF6537?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/pawsoff/fndochdepjhdgjncaaenejjikecennlk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-white?style=for-the-badge)](LICENSE)
 [![Made in India](https://img.shields.io/badge/Made%20in-India%20🇮🇳-orange?style=for-the-badge)](https://github.com/kapilraghuwanshi)
 
@@ -33,7 +33,7 @@ Pick the sites you want to guard (YouTube, Reddit, Twitter, etc.), set how many 
 
 ## 🚀 Install
 
-**[→ Add PawsOff to Chrome](https://chromewebstore.google.com/detail/pawsoff/fndochdepjhdgjncaaengjjkecennlk)** — free, one click.
+**[→ Add PawsOff to Chrome](https://chromewebstore.google.com/detail/pawsoff/fndochdepjhdgjncaaenejjikecennlk)** — free, one click.
 
 Or **load locally for development**:
 

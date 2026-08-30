@@ -5,4 +5,4 @@ promo/
 .DS_Store
 __pycache__/
 *.pyc
-/_local
+local

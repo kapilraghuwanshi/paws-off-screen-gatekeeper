@@ -2,8 +2,8 @@ const SETTINGS_KEY = "pawsOffSettings";
 const USAGE_KEY = "pawsOffUsage";
 const DEFAULT_SETTINGS = {
   enabled: true,
-  usageLimitMinutes: 30,
-  breakMinutes: 5,
+  usageLimitMinutes: 2,
+  breakMinutes: 2,
   sites: [
     "x.com",
     "twitter.com",
@@ -60,8 +60,8 @@ async function init() {
 
 function render() {
   enabledInput.checked = Boolean(settings.enabled);
-  usageLimitInput.value = String(settings.usageLimitMinutes || 30);
-  breakTimeInput.value = String(settings.breakMinutes || 5);
+  usageLimitInput.value = String(settings.usageLimitMinutes || 2);
+  breakTimeInput.value = String(settings.breakMinutes || 2);
   
   // Render checkboxes for predefined sites
   siteGrid.replaceChildren();
