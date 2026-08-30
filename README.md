@@ -15,6 +15,8 @@ PawsOff is a free, open-source Chrome extension that helps you manage your scree
 
 Pick the sites you want to guard (YouTube, Reddit, Twitter, etc.), set how many minutes you're allowed, and browse normally. When your time is up, a real animated puppy slides in, locks the page, and counts down your break. The page unlocks automatically when it's done.
 
+<img width="1280" height="800" alt="screenshot-1" src="https://github.com/user-attachments/assets/3bcb8c73-d6c4-4c5e-9e71-8c69e8aa4c81" />
+
 ---
 
 ## ✨ Features
